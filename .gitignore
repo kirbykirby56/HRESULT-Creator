@@ -1,0 +1,6 @@
+HRESULT Creator/bin/*
+HRESULT Creator/obj/*
+*.exe
+*.obj
+*.ipch
+.vs/*
