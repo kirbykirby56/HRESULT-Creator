@@ -47,7 +47,8 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>SNKEY.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -96,8 +97,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="HRESULT Creator_1_TemporaryKey.pfx" />
-    <None Include="HRESULT Creator_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -108,8 +107,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="SNKEY.pfx" />
-    <None Include="Strong Name Key.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -33,20 +33,17 @@ namespace HRESULT_Creator
                 }
             }
             long hresultcode = 0; //32 bit number
-            UInt16 i16 = 0;
+            UInt16 codeshort = 0;
             List<int> ilist = new List<int>(32);
+            ilist.Capacity = 32;
+            for (int i = 0; i < 32; i++) {
+                ilist.Add(0);
+            }
             bool ignorecode = (CodeTextBox.Text != "");
             if (ignorecode)
             {
-
-                try
-                {
-                    i16 = UInt16.Parse(CodeTextBox.Text); //Get i16 from CodeTextBox.
-                }
-                catch (Exception ex)
-                {
-                    CodeTextBox.BackColor = System.Drawing.Color.Red;
-                }
+                try {codeshort = UInt16.Parse(CodeTextBox.Text); } //Get i16 from CodeTextBox.
+                catch (Exception) {CodeTextBox.BackColor = System.Drawing.Color.Red; }
             }
             foreach (Control t in groupBox1.Controls)
             {
@@ -55,27 +52,30 @@ namespace HRESULT_Creator
                     try
                     {
                         int i = int.Parse(t.Text);
-                        if (i == 0) ilist.Add(0);
-                        if (i > 0) ilist.Add(1);
+                        if (t.Name.Contains("Bit") && t.Name != "Bits")
+                        {
+                            int index = 0;
+                            if (t.Name.Length == 5) index = int.Parse(t.Name.Substring(3, 2)) - 1;
+                            if (t.Name.Length == 4) index = int.Parse(t.Name.Substring(3, 1)) - 1;
+                            if (i == 0) ilist[index] = 0;
+                            if (i > 0) ilist[index] = 1;
+                        }
+                        else { };
                     }
                     catch (Exception ex)
                     {
                         t.BackColor = System.Drawing.Color.Red;
                         LabelError.Text += "\nError in bits! (" + t.Name + " not set! Assuming \"0\")";
-                        ilist.Add(0);
+                     
                     }
                 }
             }
 
-            for (int i = 0; i < 32; i++)
-            {
-                hresultcode = hresultcode | (uint)(ilist[i] << 31 - i);
-
-            }
-            if (i16 != 0)
+            for (int i = 0; i < 32; i++) hresultcode = hresultcode | (uint)(ilist[i] << 31 - i);
+            if (codeshort != 0)
             {
                 hresultcode = hresultcode & 0xFFFF0000;
-                hresultcode = hresultcode | (ushort)i16;
+                hresultcode = hresultcode | (long)codeshort;
             }
             HRESDec.Text = hresultcode.ToString();
             HRESHex.Text = "0x";
